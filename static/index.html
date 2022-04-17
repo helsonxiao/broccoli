@@ -14,10 +14,10 @@
     const go = new Go();
     WebAssembly.instantiateStreaming(fetch("broccoli.wasm"), go.importObject).then((result) => {
       go.run(result.instance);
-      const encodedData = BroccoliEncode("🥦 Hello World 🥦")
-      const decodedData = BroccoliDecode(encodedData)
-      const anotherEncodedData = BroccoliEncode(decodedData)
-      alert([encodedData, decodedData, anotherEncodedData].join('\n\n⬇️\n\n'))
+      const encodedData = BroccoliEncode("🥦 Hello World 🥦");
+      const decodedData = BroccoliDecode(encodedData);
+      const anotherEncodedData = BroccoliEncode(decodedData);
+      alert([encodedData, decodedData, anotherEncodedData].join('\n\n⬇️\n\n'));
     });
   </script>
 </head>
