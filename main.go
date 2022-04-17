@@ -8,7 +8,9 @@ import (
 	"github.com/andybalholm/brotli"
 )
 
-// TODO: expose encode func
+const ERR_PREFIX = "[BROCCOLI ERROR] "
+
+// TODO: expose options
 func encode(data []byte /* , options brotli.WriterOptions */) ([]byte, error) {
 	var buf bytes.Buffer
 	// writer := brotli.NewWriterOptions(&buf, options)
@@ -25,10 +27,19 @@ func decode(encodedData []byte) ([]byte, error) {
 	return ioutil.ReadAll(r)
 }
 
-const ERR_PREFIX = "[BROCCOLI ERROR] "
+func encodeWrapper(this js.Value, args []js.Value) interface{} {
+	data := args[0].String()
+	encodedData, err := encode([]byte(data))
+	if err != nil {
+		return ERR_PREFIX + err.Error()
+	}
+	buffer := js.Global().Get("Uint8Array").New(len(encodedData))
+	js.CopyBytesToJS(buffer, encodedData)
+	return buffer
+}
 
 func decodeWrapper(this js.Value, args []js.Value) interface{} {
-	var encodedData []byte = make([]byte, args[0].Length())
+	encodedData := make([]byte, args[0].Length())
 	js.CopyBytesToGo(encodedData, args[0])
 	data, err := decode(encodedData)
 	if err != nil {
@@ -40,6 +51,7 @@ func decodeWrapper(this js.Value, args []js.Value) interface{} {
 func main() {
 	done := make(chan struct{}, 0)
 	global := js.Global()
+	global.Set("BroccoliEncode", js.FuncOf(encodeWrapper))
 	global.Set("BroccoliDecode", js.FuncOf(decodeWrapper))
 	<-done
 }
