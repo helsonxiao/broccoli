@@ -1,0 +1,29 @@
+{
+  "name": "broccoli",
+  "version": "0.1.0",
+  "description": "a golang wasm wrapper for brotli ;)",
+  "main": "",
+  "scripts": {
+    "deploy": "gh-pages -d static"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/helsonxiao/broccoli.git"
+  },
+  "keywords": [
+    "brotli",
+    "wasm",
+    "golang",
+    "go",
+    "compression"
+  ],
+  "author": "helsonxiao",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/helsonxiao/broccoli/issues"
+  },
+  "homepage": "https://github.com/helsonxiao/broccoli#readme",
+  "devDependencies": {
+    "gh-pages": "^3.2.3"
+  }
+}

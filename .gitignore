@@ -1,2 +1,5 @@
 broccoli.wasm
 wasm_exec.js
+
+node_modules/
+package-lock.json
