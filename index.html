@@ -13,7 +13,7 @@
     }
     const go = new Go();
     WebAssembly.instantiateStreaming(fetch("broccoli.wasm"), go.importObject).then((result) => {
-      go.run(result.instance);
+      await go.run(result.instance);
       const encodedData = BroccoliEncode("🥦 Hello World 🥦")
       const decodedData = BroccoliDecode(encodedData)
       const anotherEncodedData = BroccoliEncode(decodedData)
