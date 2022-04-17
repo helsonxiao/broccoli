@@ -1,0 +1,13 @@
+{
+  "headers": [
+    {
+      "source": "static/broccoli.br.wasm",
+      "headers": [
+        {
+          "key": "Content-Encoding",
+          "value": "br"
+        }
+      ]
+    }
+  ]
+}
