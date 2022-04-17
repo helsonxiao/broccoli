@@ -1,1 +1,1 @@
-GOOS=js GOARCH=wasm go build -o example/broccoli.wasm
+GOOS=js GOARCH=wasm go build -o broccoli.wasm
