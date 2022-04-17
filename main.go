@@ -10,11 +10,11 @@ import (
 
 const ERR_PREFIX = "[BROCCOLI ERROR] "
 
-// TODO: expose options
-func encode(data []byte /* , options brotli.WriterOptions */) ([]byte, error) {
+var jsUint8Array = js.Global().Get("Uint8Array")
+
+func encode(data []byte, options brotli.WriterOptions) ([]byte, error) {
 	var buf bytes.Buffer
-	// writer := brotli.NewWriterOptions(&buf, options)
-	writer := brotli.NewWriter(&buf)
+	writer := brotli.NewWriterOptions(&buf, options)
 	_, err := writer.Write(data)
 	if closeErr := writer.Close(); err == nil {
 		err = closeErr
@@ -29,11 +29,12 @@ func decode(encodedData []byte) ([]byte, error) {
 
 func encodeWrapper(this js.Value, args []js.Value) interface{} {
 	data := args[0].String()
-	encodedData, err := encode([]byte(data))
+	// TODO: expose options
+	encodedData, err := encode([]byte(data), brotli.WriterOptions{})
 	if err != nil {
 		return ERR_PREFIX + err.Error()
 	}
-	buffer := js.Global().Get("Uint8Array").New(len(encodedData))
+	buffer := jsUint8Array.New(len(encodedData))
 	js.CopyBytesToJS(buffer, encodedData)
 	return buffer
 }
