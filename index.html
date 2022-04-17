@@ -12,12 +12,16 @@
       };
     }
     const go = new Go();
-    WebAssembly.instantiateStreaming(fetch("broccoli.wasm"), go.importObject).then((result) => {
+    WebAssembly.instantiateStreaming(fetch("broccoli.wasm", {}), go.importObject).then((result) => {
       go.run(result.instance);
-      const encodedData = BroccoliEncode("🥦 Hello World 🥦");
+      const data = "🥦 Hello World 🥦";
+      const encodedData = BroccoliEncode(data);
       const decodedData = BroccoliDecode(encodedData);
-      const anotherEncodedData = BroccoliEncode(decodedData);
-      alert([encodedData, decodedData, anotherEncodedData].join('\n\n⬇️\n\n'));
+      if (data !== decodedData) {
+        alert(`${data} !== ${decodedData}`);
+        return
+      }
+      alert([data, encodedData, decodedData].join('\n\n⬇️\n\n'));
     });
   </script>
 </head>
