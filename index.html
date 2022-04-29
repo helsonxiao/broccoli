@@ -11,12 +11,13 @@
         return await WebAssembly.instantiate(source, importObject);
       };
     }
+    const textDecoder = new TextDecoder()
     const go = new Go();
     WebAssembly.instantiateStreaming(fetch("broccoli.wasm", {}), go.importObject).then((result) => {
       go.run(result.instance);
       const data = "🥦 Hello World 🥦";
       const encodedData = BroccoliEncode(data);
-      const decodedData = BroccoliDecode(encodedData);
+      const decodedData = textDecoder.decode(BroccoliDecode(encodedData));
       if (data !== decodedData) {
         alert(`${data} !== ${decodedData}`);
         return
