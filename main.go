@@ -42,11 +42,13 @@ func encodeWrapper(this js.Value, args []js.Value) interface{} {
 func decodeWrapper(this js.Value, args []js.Value) interface{} {
 	encodedData := make([]byte, args[0].Length())
 	js.CopyBytesToGo(encodedData, args[0])
-	data, err := decode(encodedData)
+	decodedData, err := decode(encodedData)
 	if err != nil {
 		return ERR_PREFIX + err.Error()
 	}
-	return string(data)
+	buffer := jsUint8Array.New(len(decodedData))
+	js.CopyBytesToJS(buffer, decodedData)
+	return buffer
 }
 
 func main() {
