@@ -1,4 +1,4 @@
-module helsonxiao.github.io/broccoli
+module github.com/helsonxiao/broccoli
 
 go 1.18
 
