@@ -2,6 +2,7 @@ import "../go/wasm_exec.js";
 // https://github.com/google/brotli/blob/master/js/decode.js
 import { BrotliDecode as jsBrotliDecode } from "./decode.js";
 // build manually using https://github.com/httptoolkit/brotli-wasm
+// https://github.com/helsonxiao/brotli-wasm/commit/e6e3bcc67ef855af0fa8e0b759699a3db38d83c8
 import initRust, * as rustBrotli from "../rust/brotli_wasm.js";
 
 const params = new URLSearchParams(location.search);
