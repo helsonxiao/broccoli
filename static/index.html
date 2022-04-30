@@ -1,32 +1,35 @@
 <html>
-
-<head>
-  <meta charset="utf-8" />
-  <script src="wasm_exec.js"></script>
-  <script>
-    if (!WebAssembly.instantiateStreaming) {
-      // polyfill
-      WebAssembly.instantiateStreaming = async (resp, importObject) => {
-        const source = await (await resp).arrayBuffer();
-        return await WebAssembly.instantiate(source, importObject);
-      };
-    }
-    const textDecoder = new TextDecoder()
-    const go = new Go();
-    WebAssembly.instantiateStreaming(fetch("broccoli.wasm", {}), go.importObject).then((result) => {
-      go.run(result.instance);
-      const data = "🥦 Hello World 🥦";
-      const encodedData = BroccoliEncode(data);
-      const decodedData = textDecoder.decode(BroccoliDecode(encodedData));
-      if (data !== decodedData) {
-        alert(`${data} !== ${decodedData}`);
-        return
+  <head>
+    <meta charset="utf-8" />
+    <script src="./go/wasm_exec.js"></script>
+    <script>
+      if (!WebAssembly.instantiateStreaming) {
+        if (!WebAssembly.instantiate) {
+          throw new Error("WebAssembly.instantiate is not available");
+        }
+        // polyfill
+        WebAssembly.instantiateStreaming = async (resp, importObject) => {
+          const source = await (await resp).arrayBuffer();
+          return await WebAssembly.instantiate(source, importObject);
+        };
       }
-      alert([data, encodedData, decodedData].join('\n\n⬇️\n\n'));
-    });
-  </script>
-</head>
-
-<body></body>
-
+      const textDecoder = new TextDecoder();
+      const go = new Go();
+      WebAssembly.instantiateStreaming(
+        fetch("go/broccoli.wasm", {}),
+        go.importObject
+      ).then((result) => {
+        go.run(result.instance);
+        const data = "🥦 Hello World 🥦";
+        const encodedData = BroccoliEncode(data);
+        const decodedData = textDecoder.decode(BroccoliDecode(encodedData));
+        if (data !== decodedData) {
+          alert(`${data} !== ${decodedData}`);
+          return;
+        }
+        alert([data, encodedData, decodedData].join("\n\n⬇️\n\n"));
+      });
+    </script>
+  </head>
+  <body></body>
 </html>

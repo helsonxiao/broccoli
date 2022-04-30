@@ -1,7 +1,7 @@
 {
   "headers": [
     {
-      "source": "static/broccoli.br.wasm",
+      "source": "static/go/broccoli.br.wasm",
       "headers": [
         {
           "key": "Content-Encoding",
