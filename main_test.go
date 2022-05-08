@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"testing"
+	"time"
 
 	"github.com/andybalholm/brotli"
 )
@@ -20,4 +21,11 @@ func TestBroccoli(t *testing.T) {
 	if decodedMsg != msg {
 		t.Errorf("decodedMsg != msg")
 	}
+
+	startTime := time.Now()
+	for i := 0; i < 30000; i += 1 {
+		decode(encodedData)
+	}
+	endTime := time.Now()
+	fmt.Println(endTime.UnixMilli() - startTime.UnixMilli())
 }
