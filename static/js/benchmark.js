@@ -59,6 +59,7 @@ if (language === "js" || language === "go") {
     } else if (language === "go") {
       for (let i = 0; i < times; i += 1) {
         BroccoliDecode(encodedData);
+        // BroccoliDummyDecode(encodedData);
       }
     }
     console.timeEnd(language);

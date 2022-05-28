@@ -51,10 +51,19 @@ func decodeWrapper(this js.Value, args []js.Value) interface{} {
 	return buffer
 }
 
+func dummyDecodeWrapper(this js.Value, args []js.Value) interface{} {
+	encodedData := make([]byte, args[0].Length())
+	js.CopyBytesToGo(encodedData, args[0])
+	buffer := jsUint8Array.New(len(encodedData))
+	js.CopyBytesToJS(buffer, encodedData)
+	return buffer
+}
+
 func main() {
 	done := make(chan struct{}, 0)
 	global := js.Global()
 	global.Set("BroccoliEncode", js.FuncOf(encodeWrapper))
 	global.Set("BroccoliDecode", js.FuncOf(decodeWrapper))
+	global.Set("BroccoliDummyDecode", js.FuncOf(dummyDecodeWrapper))
 	<-done
 }
