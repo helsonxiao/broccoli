@@ -1,8 +1,11 @@
 .DS_Store
+.vscode
 
 broccoli.wasm
 broccoli.br.wasm
+broccoli.tinygo.wasm
 wasm_exec.js
+wasm_exec.tinygo.js
 
 node_modules/
 package-lock.json
