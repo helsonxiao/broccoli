@@ -1,4 +1,5 @@
 import "../go/wasm_exec.js";
+// import "../go/wasm_exec.tinygo.js";
 // https://github.com/google/brotli/blob/master/js/decode.js
 import { BrotliDecode as jsBrotliDecode } from "./decode.js";
 // build manually using https://github.com/httptoolkit/brotli-wasm
@@ -39,6 +40,7 @@ if (language === "js" || language === "go") {
   const go = new Go();
   WebAssembly.instantiateStreaming(
     fetch("go/broccoli.wasm", {}),
+    // fetch("go/broccoli.tinygo.wasm", {}),
     go.importObject
   ).then((result) => {
     go.run(result.instance);
@@ -59,6 +61,7 @@ if (language === "js" || language === "go") {
     } else if (language === "go") {
       for (let i = 0; i < times; i += 1) {
         BroccoliDecode(encodedData);
+        // BroccoliDummyDecode(encodedData);
       }
     }
     console.timeEnd(language);
